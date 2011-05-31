@@ -1,0 +1,11 @@
+* About invenio-bitten
+
+Bitten recipe and client tools for Invenio.
+
+* License
+
+GNU General Public License version 2
+
+* See also
+
+- [[http://invenio-software.org/]]
