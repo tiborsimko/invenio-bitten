@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# Helper script for Invenio Bitten clients, used to set up and tear
+# down special space dedicated to LibreOffice conversions.  See
+# <https://github.com/tiborsimko/invenio-bitten>.
+#
+# Tibor Simko <tibor.simko@cern.ch>
+#
+# Copyright (C) 2010, 2011 CERN
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+CFG_INVENIO_PREFIX=${CFG_INVENIO_PREFIX:=/opt/invenio}
+
+ACTION=$1
+
+usage () {
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "   --help, -h                 prints this help"
+    echo "   --setup-ooffice-space      creates special space for LibreOffice conversions"
+    echo "   --teardown-ooffice-space   removes special space for LibreOffice conversions"
+}
+
+if [ "$ACTION" = "--help" ] || [ "$ACTION" = "-h" ]; then
+    usage
+elif [ "$ACTION" = "--setup-ooffice-space" ]; then
+    mkdir -p ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
+    chown -R nobody ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
+    chmod -R 755 ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
+elif [ "$ACTION" = "--teardown-ooffice-space" ]; then
+    rm -rf ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
+else
+    usage
+    exit 1
+fi
+
+# end of file
