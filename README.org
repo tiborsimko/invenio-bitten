@@ -8,8 +8,8 @@
 
 * About invenio-bitten
 
-=invenio-bitten= repository contains [[http://bitten.edgewall.org][Bitten]] recipe and client tools
-used to set up [[http://invenio-software.org/][Invenio]] continuous integration infrastructure for [[http://trac.edgewall.org][Trac]].
+=invenio-bitten= repository contains [[http://bitten.edgewall.org/][Bitten]] recipe and client tools
+used to set up [[http://invenio-software.org/][Invenio]] continuous integration infrastructure for [[http://trac.edgewall.org/][Trac]].
 
 * Contents
 
@@ -73,5 +73,5 @@ along with this program; if not, see [[http://www.gnu.org/licenses/]].
 * See also
 
 - [[http://invenio-software.org/][Invenio]]
-- [[http://bitten.edgewall.org][Bitten]]
-- [[http://trac.edgewall.org][Trac]]
+- [[http://bitten.edgewall.org/][Bitten]]
+- [[http://trac.edgewall.org/][Trac]]
