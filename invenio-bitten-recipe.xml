@@ -1,0 +1,57 @@
+<build xmlns:sh="http://bitten.edgewall.org/tools/sh"
+       xmlns:c="http://bitten.edgewall.org/tools/c">
+  <step id="checkout" description="Checkout sources">
+    <sh:exec file="/bin/sh"
+             args="-c 'git clone http://invenio-software.org/repo/invenio'"/>
+  </step>
+  <step id="build" description="Build sources">
+    <sh:exec file="/bin/sh"
+             args="-c 'cd ${basedir}/invenio; aclocal; automake -a; autoconf; ./configure; make'"/>
+  </step>
+  <step id="install" description="Install sources">
+    <sh:exec file="/bin/sh"
+             args="-c 'sudo /usr/bin/invenio-bitten-client --teardown-ooffice-space'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'rm -rf /opt/invenio/; mkdir /opt/invenio'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'cd ${basedir}/invenio; make install'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'sudo /usr/bin/invenio-bitten-client --setup-ooffice-space'"/>
+  </step>
+  <step id="install-plugins" description="Install plugins">
+    <sh:exec file="/bin/sh"
+             args="-c 'cd ${basedir}/invenio; make install-mathjax-plugin install-jquery-plugins install-fckeditor-plugin install-pdfa-helper-files'"/>
+  </step>
+  <step id="load-demo-site" description="Load demo site">
+    <sh:exec file="/bin/sh"
+             args="-c 'echo [Invenio] > /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_SITE_URL = http://`/bin/hostname -f` >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_SITE_SECURE_URL = https://`/bin/hostname -f` >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_SITE_ADMIN_EMAIL = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_SITE_SUPPORT_EMAIL = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_WEBALERT_ALERT_ENGINE_EMAIL = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_WEBCOMMENT_ALERT_ENGINE_EMAIL = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_WEBCOMMENT_DEFAULT_MODERATOR = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'echo CFG_BIBAUTHORID_AUTHOR_TICKET_ADMIN_EMAIL = tibor.simko@cern.ch >> /opt/invenio/etc/invenio-local.conf'"/>
+    <sh:exec file="/bin/sh"
+             args="-c '/opt/invenio/bin/inveniocfg --update-all --create-apache-conf --drop-demo-site --create-demo-site --load-demo-records --yes-i-know'"/>
+    <sh:exec file="/bin/sh"
+             args="-c 'sudo /usr/sbin/apachectl restart'"/>
+  </step>
+  <step id="run-unit-tests" description="Run unit tests">
+    <sh:exec file="/bin/sh"
+             args="-c '/opt/invenio/bin/inveniocfg --run-unit-tests --yes-i-know'"/>
+  </step>
+  <step id="run-regression-tests" description="Run regression tests">
+    <sh:exec file="/bin/sh"
+             args="-c '/opt/invenio/bin/inveniocfg --run-regression-tests --yes-i-know'"/>
+  </step>
+</build>
