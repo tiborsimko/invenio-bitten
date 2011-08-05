@@ -20,7 +20,7 @@
   </step>
   <step id="install-plugins" description="Install plugins">
     <sh:exec file="/bin/sh"
-             args="-c 'cd ${basedir}/invenio; make install-mathjax-plugin install-jquery-plugins install-fckeditor-plugin install-pdfa-helper-files'"/>
+             args="-c 'cd ${basedir}/invenio; make install-mathjax-plugin install-jquery-plugins install-ckeditor-plugin install-pdfa-helper-files'"/>
   </step>
   <step id="load-demo-site" description="Load demo site">
     <sh:exec file="/bin/sh"
