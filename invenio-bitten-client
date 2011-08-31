@@ -31,6 +31,7 @@ usage () {
     echo "   --help, -h                 prints this help"
     echo "   --setup-ooffice-space      creates special space for LibreOffice conversions"
     echo "   --teardown-ooffice-space   removes special space for LibreOffice conversions"
+    echo "   --kill-ooffice-daemon      kills LibreOffice daemon and removes its PID file"
 }
 
 if [ "$ACTION" = "--help" ] || [ "$ACTION" = "-h" ]; then
@@ -41,6 +42,9 @@ elif [ "$ACTION" = "--setup-ooffice-space" ]; then
     chmod -R 755 ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
 elif [ "$ACTION" = "--teardown-ooffice-space" ]; then
     rm -rf ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files
+elif [ "$ACTION" = "--kill-ooffice-daemon" ]; then
+    killall -q soffice.bin
+    rm -f ${CFG_INVENIO_PREFIX}/var/tmp/ooffice-tmp-files/soffice.pid
 else
     usage
     exit 1
