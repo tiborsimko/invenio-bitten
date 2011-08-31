@@ -10,7 +10,7 @@
   </step>
   <step id="install" description="Install sources">
     <sh:exec file="/bin/sh"
-             args="-c 'sudo /usr/bin/invenio-bitten-client --kill-ooffice-daemon"/>
+             args="-c 'sudo /usr/bin/invenio-bitten-client --kill-ooffice-daemon'"/>
     <sh:exec file="/bin/sh"
              args="-c 'sudo /usr/bin/invenio-bitten-client --teardown-ooffice-space'"/>
     <sh:exec file="/bin/sh"
